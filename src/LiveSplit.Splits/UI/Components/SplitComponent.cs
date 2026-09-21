@@ -391,7 +391,6 @@ public class SplitComponent : IComponent
                 {
                     label.Text = deltaTime != null ? DeltaTimeFormatter.Format(deltaTime) : TimeFormatter.Format(Split.SplitTime[timingMethod]);
                 }
-
                 else if (type == ColumnType.Delta)
                 {
                     label.Text = DeltaTimeFormatter.Format(deltaTime);
@@ -404,6 +403,13 @@ public class SplitComponent : IComponent
                 Color? color = LiveSplitStateHelper.GetSplitColor(state, segmentDelta, splitIndex, false, true, comparison, timingMethod)
                     ?? (Settings.OverrideTimesColor ? Settings.BeforeTimesColor : state.LayoutSettings.TextColor);
                 label.ForeColor = color.Value;
+
+                // 段階色（有効な列だけ）
+                Color? tierColor = data.GetTierColor(segmentDelta);
+                if (tierColor != null)
+                {
+                    label.ForeColor = tierColor.Value;
+                }
 
                 if (type == ColumnType.SegmentDeltaorSegmentTime)
                 {

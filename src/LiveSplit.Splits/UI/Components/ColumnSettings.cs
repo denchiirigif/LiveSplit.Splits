@@ -3,6 +3,7 @@ using LiveSplit.Model;
 using LiveSplit.Model.Comparisons;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -32,6 +33,8 @@ public partial class ColumnSettings : UserControl
     protected int ColumnIndex => ColumnsList.IndexOf(this);
     protected int TotalColumns => ColumnsList.Count;
 
+    private bool loadingTierUi;
+
     public event EventHandler ColumnRemoved;
     public event EventHandler MovedUp;
     public event EventHandler MovedDown;
@@ -45,6 +48,9 @@ public partial class ColumnSettings : UserControl
         CurrentState = state;
         ColumnsList = columnsList;
     }
+
+    private Button[] TierButtons => [btnTier0, btnTier1, btnTier2, btnTier3, btnTier4];
+    private NumericUpDown[] TierNumerics => [numTier1, numTier2, numTier3];
 
     private void cmbTimingMethod_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -76,7 +82,33 @@ public partial class ColumnSettings : UserControl
         txtName.DataBindings.Add("Text", this, "ColumnName", false, DataSourceUpdateMode.OnPropertyChanged);
         cmbColumnType.DataBindings.Add("SelectedItem", this, "Type", false, DataSourceUpdateMode.OnPropertyChanged);
         cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
+
+        LoadTierUi();
+
         txtName_TextChanged(null, EventArgs.Empty);
+    }
+
+    private void LoadTierUi()
+    {
+        loadingTierUi = true;
+
+        chkTierColors.Checked = Data.UseTierColors;
+        tableTier.Enabled = Data.UseTierColors;
+
+        NumericUpDown[] numerics = TierNumerics;
+        for (int i = 0; i < numerics.Length; i++)
+        {
+            decimal value = (decimal)Data.TierThresholds[i];
+            numerics[i].Value = Math.Min(numerics[i].Maximum, Math.Max(numerics[i].Minimum, value));
+        }
+
+        Button[] buttons = TierButtons;
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].BackColor = Data.TierColors[i];
+        }
+
+        loadingTierUi = false;
     }
 
     public void UpdateEnabledButtons()
@@ -171,6 +203,50 @@ public partial class ColumnSettings : UserControl
     private void btnMoveDown_Click(object sender, EventArgs e)
     {
         MovedDown?.Invoke(this, null);
+    }
+
+    private void chkTierColors_CheckedChanged(object sender, EventArgs e)
+    {
+        if (loadingTierUi)
+        {
+            return;
+        }
+
+        Data.UseTierColors = chkTierColors.Checked;
+        tableTier.Enabled = chkTierColors.Checked;
+    }
+
+    private void numTier_ValueChanged(object sender, EventArgs e)
+    {
+        if (loadingTierUi)
+        {
+            return;
+        }
+
+        int index = Array.IndexOf(TierNumerics, sender);
+        if (index >= 0)
+        {
+            Data.TierThresholds[index] = (double)((NumericUpDown)sender).Value;
+        }
+    }
+
+    private void btnTier_Click(object sender, EventArgs e)
+    {
+        SettingsHelper.ColorButtonClick((Button)sender, this);
+    }
+
+    private void btnTier_BackColorChanged(object sender, EventArgs e)
+    {
+        if (loadingTierUi)
+        {
+            return;
+        }
+
+        int index = Array.IndexOf(TierButtons, sender);
+        if (index >= 0)
+        {
+            Data.TierColors[index] = ((Button)sender).BackColor;
+        }
     }
 
     public void SelectControl()
