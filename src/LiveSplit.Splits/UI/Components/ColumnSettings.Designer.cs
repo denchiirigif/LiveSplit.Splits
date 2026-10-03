@@ -300,8 +300,8 @@
             this.btnTier1.TabIndex = 62;
             this.btnTier1.UseVisualStyleBackColor = false;
             this.btnTier1.Click += new System.EventHandler(this.btnTier_Click);
-            this.btnTier0.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnTier0.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
+            this.btnTier1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnTier1.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
             // 
             // btnTier2
             // 
@@ -311,8 +311,8 @@
             this.btnTier2.TabIndex = 63;
             this.btnTier2.UseVisualStyleBackColor = false;
             this.btnTier2.Click += new System.EventHandler(this.btnTier_Click);
-            this.btnTier0.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnTier0.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
+            this.btnTier2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnTier2.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
             // 
             // btnTier3
             // 
@@ -322,8 +322,8 @@
             this.btnTier3.TabIndex = 64;
             this.btnTier3.UseVisualStyleBackColor = false;
             this.btnTier3.Click += new System.EventHandler(this.btnTier_Click);
-            this.btnTier0.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnTier0.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
+            this.btnTier3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnTier3.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
             // 
             // btnTier4
             // 
@@ -333,9 +333,8 @@
             this.btnTier4.TabIndex = 65;
             this.btnTier4.UseVisualStyleBackColor = false;
             this.btnTier4.Click += new System.EventHandler(this.btnTier_Click);
-            this.btnTier0.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnTier0.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
-            // 
+            this.btnTier4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnTier4.BackColorChanged += new System.EventHandler(this.btnTier_BackColorChanged);
             // btnRemoveColumn
             // 
             this.btnRemoveColumn.Anchor = System.Windows.Forms.AnchorStyles.Right;

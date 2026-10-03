@@ -404,7 +404,6 @@ public class SplitComponent : IComponent
                     ?? (Settings.OverrideTimesColor ? Settings.BeforeTimesColor : state.LayoutSettings.TextColor);
                 label.ForeColor = color.Value;
 
-                // 段階色（有効な列だけ）
                 Color? tierColor = data.GetTierColor(segmentDelta);
                 if (tierColor != null)
                 {
